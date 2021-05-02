@@ -1,37 +1,43 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect,  useRef }  from 'react';
 import './App.css';
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from './sketches/sketch';
-import g from './sketches/sketch';
 import { Button, Paper } from '@material-ui/core';
-// import * as Tone from 'tone'
-// const file = require('./audiofiles/Stronger.mp3');
-
-
-// let player; 
+import * as Tone from 'tone'
+const file = require('./sketches/audiofiles/Stronger.mp3');
 
 function App() {
   const [diameter, setDiameter] = useState(100)
   const [red, setRed] = useState(100)
   const [isLoaded, setIsLoading] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
   const [btnTxt, buttonContext] = useState("Play")
-    //  player = new Tone.Player({
-    //     url: file, 
-    //     loop: false,
-    //   }).toDestination();
+
+  let player = new Tone.Player({
+      url:file,
+      loop:false,
+      onload: () => setIsLoading(true)
+    }).toDestination()
+
+    const playerRef = useRef(player);
+
+    function playSong(){
+       if(isLoaded === true){
+         if(isPlaying===true){
+         buttonContext("Stop")
+         playerRef.current.start()
+         setIsPlaying(false)
+       }else if(isPlaying===false){
+         buttonContext("Play")
+         playerRef.current.stop()
+         setIsPlaying(true)
+       }
+      }
+    }
 
 
 
 
-     function playSong() {
-      if(isLoaded === false){
-            setIsLoading(true)
-            buttonContext("Play")
-          }else if( isLoaded === true){
-            setIsLoading(false)
-            buttonContext("Pause")
-          }
-        }
   return (
           <div className = "App">
                 <div className="site">
@@ -47,10 +53,10 @@ function App() {
                   </div>
 
                   <div className="Controls">
-                      <Button className="btn btn-default"  onClick={playSong}>
+                      <Button className="btn btn-default" disabled={!isLoaded} onClick={playSong}>
                         <p>{btnTxt}</p>
                       </Button>
-
+                      
                         <label htmlFor="slider">
                               <input
                                   id="slider1"
