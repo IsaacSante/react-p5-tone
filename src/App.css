@@ -1,0 +1,38 @@
+.App {
+  padding: 0%;
+  margin: 0%;
+  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  background-color: whitesmoke;
+}
+
+.site {
+  padding: 1rem;
+  text-align: center;
+  justify-content: center;
+}
+
+h1{
+  padding: 0%;
+  margin: 0%;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.title {
+  padding: 0%;
+  margin: 0%;
+  display: inline;
+}
+.App-cont {
+  display: flex;
+  padding: 0%;
+  margin: 0%;
+
+}
+
+.Controls {
+  padding: 1rem;
+}
